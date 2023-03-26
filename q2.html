@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Question 1
+    </title>
+    <style>
+        #formValidate {
+        color: red;
+        opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="validate()">
+        <label for="fname">Name: </label>
+        <input type="text" name="fname" id="name" required><br>
+        <label for="address">Address: </label>
+        <input type="text" name="address" id="address" required><br>
+        <label for="dob">DOB: </label>
+        <input type="date" name="dob" id="dob" required> <br>
+        <label for="email">Email: </label>
+        <input type="email" name="email" id="email" required><br>
+
+        <lable>Hobbies:</lable><br>
+        <input type="checkbox" name="Hobbies1" value="Painting" id="Painting" checked>
+        <label for="Hobbies1"> Painting</label><br>
+        <input type="checkbox" name="Hobbies2" value="Football" id="Football">
+        <label for="Hobbies2"> Football</label><br>
+
+        <label for="branch">Branch: </label>
+        <input type="radio" name="branch" value="extc" id=" extc" checked>EXTC
+        <input type="radio" name="branch" value="cs" id=" cs">CS
+        <br>
+        <p id="formValidate"></p>
+        <input type="submit">
+    </form>
+    <script>
+        const nameDoc=document.getElementById('name');
+        const addressDoc=document.getElementById('address');
+        const dobDoc=document.getElementById('dob');
+        const emailDoc=document.getElementById('email');
+        const hobbiesDoc=document.getElementById('hobbies');
+        const formValidate=document.getElementById('formValidate')
+
+        function placeholder(val,sentence){
+            if(val==""){
+                formValidate.innerHTML=sentence
+            }
+            else{
+                    formValidate.innerHTML=" ";
+            }
+        }
+        function checkboxval(){
+            if (Painting.checked == false && Football.checked == false){  
+                formValidate.innerHTML = "Please mark one of the checkbox!";  
+            }  
+            else{
+                formValidate.innerHTML=" ";
+            }
+        }
+
+        nameDoc.addEventListener('input',()=>{
+            let nameval=nameDoc.value;
+            placeholder(nameval,"Name is required!")
+        });
+        addressDoc.addEventListener('input',()=>{
+            let addressval=addressDoc.value;
+            placeholder(addressval,"Address is required!")
+        });
+        dobDoc.addEventListener('input',()=>{
+            let dobval=dobDoc.value;
+            if(dobval==""){
+                formValidate.innerHTML="dob is required!"
+            }
+            else{
+                    formValidate.innerHTML=" ";
+                    let year=parseInt(dobval.substring(0, 4));
+                    const now = new Date();
+                    const currentYear = now.getFullYear();
+                    if((currentYear-year)<22){
+                        formValidate.innerHTML="Age should be greater than 22!"
+                    }
+                    else{
+                        formValidate.innerHTML=" "
+                    };
+            }
+        });
+        emailDoc.addEventListener('input',()=>{       
+            let emailval=emailDoc.value;
+            if(emailval=="")
+                {
+                    formValidate.innerHTML="Email is required!"
+                }
+            else{
+                let atposition=emailval.indexOf("@");  
+                let dotposition=emailval.lastIndexOf("."); 
+                if (atposition<1 || dotposition<atposition+2 || dotposition+2>=emailval.length){ 
+                    formValidate.innerHTML="Please enter a valid e-mail address!"
+                }
+                else{
+                    formValidate.innerHTML=" ";
+                }
+            }
+        });
+
+        const Painting = document.getElementById("Painting");  
+        const Football = document.getElementById("Football");  
+        Painting.addEventListener('input',()=>{
+            checkboxval()
+        })
+        Football.addEventListener('input',()=>{
+            checkboxval()
+        })
+
+        function validate(){
+            alert(`The user inputs are: Name = ${nameDoc.value}, Address = ${addressDoc.value}, dob = ${dobDoc.value}, etc.`);
+        }
+    </script>
+</body>
+</html>
